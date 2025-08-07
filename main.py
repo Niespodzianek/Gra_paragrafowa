@@ -73,9 +73,9 @@ if __name__ == "__main__":
         Żeby zakończyć grę wystarczy wpisać 0 zamiast numeru paragrafu, w momencie podejmowania decyzji.
         
         Dostępne flagi:
-            --help - pomoc,
-            --version - wersja programu,
-            --history - historia wersji gry,
+            --help - pomoc i wyjcie,
+            --version - wersja programu i wyjcie,
+            --history - historia wersji gry i wyjcie,
             --info - uruchomienie gry w trybie z komentarzami ułatwiającymi grę,
             --debug - uruchomienie gry w trybie debug.
 """
