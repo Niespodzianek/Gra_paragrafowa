@@ -1,9 +1,10 @@
 import sys, os
+from lokacje import lista_lokacji
 
 APP_NAME: str = "Gra paragrafowa"
 APP_VERSION: str = "0.0.0"
 DEBUG: bool = "--debug" in sys.argv
-INFO: bool = "--quite" in sys.argv
+INFO: bool = "--info" in sys.argv
 
 def debug_print(tekst: str) -> None:
     if DEBUG:
@@ -11,11 +12,46 @@ def debug_print(tekst: str) -> None:
     return None
 
 def info_print(tekst: str) -> None:
-    if DEBUG or QUITE:
+    if DEBUG or INFO:
         input(f"INFO: {tekst}. Naciśnij ENTER aby kontynuować !!!")
     return None
 
+
+def tura_gry(status_gry:bool, obecna_lokacja: dict[str, str]) -> (bool, dict[str, str]):
+    nastepna_lokacja: dict[str, str]
+    petla_tury: bool = True
+    wybor: str
+    while petla_tury:
+        os.system("cls" if os.name == "nt" else "clear")
+        info_print("Za chwilę wyświetlisz opis paragrafu, w którym się znajdujesz")
+        print(f"{obecna_lokacja['opis']}")
+        info_print("Za chwilę wyświetlisz dostępne kierunki, do których się możesz poruszyć")
+        print(f"Możliwe kierunki ruchu z {obecna_lokacja['nazwa']}:")
+        for indeks, lokacja in enumerate(obecna_lokacja["destynacje"]):
+            print(lokacja)
+        wybor = input("Wpisz numer wybranego paragrafu: ")
+        if wybor in obecna_lokacja["destynacje"]:
+            nastepna_lokacja = lista_lokacji[int(wybor)]
+            petla_tury = False
+        elif wybor == "0":
+            return False, lista_lokacji[0]
+        else:
+            info_print("Dokonano nieprawidłowego wyboru. Wybierz ponownie !!!")
+    return status_gry, nastepna_lokacja
+
 def program() -> None:
+    debug_print("Rozpoczynam grać w grę. Uruchamiam pętle gry")
+    paragraf: dict[str, str]
+    status: bool = True
+    program_pracuje: bool = True
+    paragraf = lista_lokacji[1]
+    while program_pracuje:
+        os.system("cls" if os.name == "nt" else "clear")
+        debug_print("Rozpoczęcie tury gry")
+        debug_print(f"Pełny słownik lokacji, w której jesteś: {paragraf}")
+        status, paragraf = tura_gry(status_gry=status, obecna_lokacja=paragraf)
+        debug_print("Koniec tury gry")
+        program_pracuje = status
     return None
 
 if __name__ == "__main__":
@@ -24,11 +60,14 @@ if __name__ == "__main__":
         print(f"""
         To jest gra paragrafowa, której akcja dzieje się w niedalekiej przyszłości, w świecie cyberpunkowym.
         
+        TIP !!!
+        Żeby zakończyć grę wystarczy wpisać 0 zamiast numeru paragrafu, w momencie podejmowania decyzji.
+        
         Dostępne flagi:
             --help - pomoc,
             --version - wersja programu,
             --history - historia wersji gry,
-            --info - uruchomienie gry w trybie z komentarzami dla gracza,
+            --info - uruchomienie gry w trybie z komentarzami ułatwiającymi grę,
             --debug - uruchomienie gry w trybie debug.
 """)
         sys.exit()
@@ -47,12 +86,11 @@ if __name__ == "__main__":
         Rozpoczęcie pracy.
 """)
         sys.exit()
-    if "--info" in sys.argv:
-        DEBUG = False
+    os.system("cls" if os.name == "nt" else "clear")
     debug_print("Program wita Michasia !!!")
     info_print("Gra rozpoczyna pracę")
-
+    os.system("cls" if os.name == "nt" else "clear")
     program()
-
-    info_print("Koniec gry. DO zobaczenia !!!")
+    os.system("cls" if os.name == "nt" else "clear")
+    info_print("Koniec gry. Do zobaczenia !!!")
     sys.exit()
