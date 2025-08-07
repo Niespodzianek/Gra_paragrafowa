@@ -6,10 +6,12 @@ APP_VERSION: str = "0.0.1"
 DEBUG: bool = "--debug" in sys.argv
 INFO: bool = "--info" in sys.argv
 
+
 def debug_print(tekst: str) -> None:
     if DEBUG:
-        input( f"DEBUG: {tekst}. Naciśnij ENTER aby kontynuować !!!")
+        input(f"DEBUG: {tekst}. Naciśnij ENTER aby kontynuować !!!")
     return None
+
 
 def info_print(tekst: str) -> None:
     if DEBUG or INFO:
@@ -17,7 +19,9 @@ def info_print(tekst: str) -> None:
     return None
 
 
-def tura_gry(status_gry:bool, obecny_paragraf: dict[str, str]) -> (bool, dict[str, str]):
+def tura_gry(
+    status_gry: bool, obecny_paragraf: dict[str, str]
+) -> tuple[bool, dict[str, str]]:
     nastepna_lokacja: dict[str, str]
     petla_tury: bool = True
     wybor: str
@@ -25,7 +29,9 @@ def tura_gry(status_gry:bool, obecny_paragraf: dict[str, str]) -> (bool, dict[st
         os.system("cls" if os.name == "nt" else "clear")
         info_print("Za chwilę wyświetlisz opis paragrafu, w którym się znajdujesz")
         print(f"{obecny_paragraf['opis']}")
-        info_print("Za chwilę wyświetlisz dostępne kierunki, do których się możesz poruszyć")
+        info_print(
+            "Za chwilę wyświetlisz dostępne kierunki, do których się możesz poruszyć"
+        )
         print(f"Możliwe kierunki ruchu z {obecny_paragraf['nazwa']}:")
         for indeks, lokacja in enumerate(obecny_paragraf["destynacje"]):
             print(lokacja)
@@ -38,6 +44,7 @@ def tura_gry(status_gry:bool, obecny_paragraf: dict[str, str]) -> (bool, dict[st
         else:
             info_print("Dokonano nieprawidłowego wyboru. Wybierz ponownie !!!")
     return status_gry, nastepny_paragraf
+
 
 def program() -> None:
     debug_print("Rozpoczynam grać w grę. Uruchamiam pętle gry")
@@ -54,10 +61,12 @@ def program() -> None:
         program_pracuje = status
     return None
 
+
 if __name__ == "__main__":
     if "--help" in sys.argv:
         os.system("cls" if os.name == "nt" else "clear")
-        print(f"""
+        print(
+            f"""
         To jest gra paragrafowa, której akcja dzieje się w niedalekiej przyszłości, w świecie cyberpunkowym.
         
         TIP !!!
@@ -69,17 +78,21 @@ if __name__ == "__main__":
             --history - historia wersji gry,
             --info - uruchomienie gry w trybie z komentarzami ułatwiającymi grę,
             --debug - uruchomienie gry w trybie debug.
-""")
+"""
+        )
         sys.exit()
     if "--version" in sys.argv:
         os.system("cls" if os.name == "nt" else "clear")
-        print(f"""
+        print(
+            f"""
         Program {APP_NAME}, wersja: {APP_VERSION}
-""")
+"""
+        )
         sys.exit()
     if "--history" in sys.argv:
         os.system("cls" if os.name == "nt" else "clear")
-        print(f"""
+        print(
+            f"""
         Historia wersji:
         
         0.0.1
@@ -87,7 +100,8 @@ if __name__ == "__main__":
         
         0.0.0
         Rozpoczęcie pracy.
-""")
+"""
+        )
         sys.exit()
     os.system("cls" if os.name == "nt" else "clear")
     debug_print("Program wita Michasia !!!")
