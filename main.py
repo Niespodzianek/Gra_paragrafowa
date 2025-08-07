@@ -1,8 +1,8 @@
 import sys, os
-from lokacje import lista_lokacji
+from paragrafy import lista_paragrafow
 
 APP_NAME: str = "Gra paragrafowa"
-APP_VERSION: str = "0.0.0"
+APP_VERSION: str = "0.0.1"
 DEBUG: bool = "--debug" in sys.argv
 INFO: bool = "--info" in sys.argv
 
@@ -17,39 +17,39 @@ def info_print(tekst: str) -> None:
     return None
 
 
-def tura_gry(status_gry:bool, obecna_lokacja: dict[str, str]) -> (bool, dict[str, str]):
+def tura_gry(status_gry:bool, obecny_paragraf: dict[str, str]) -> (bool, dict[str, str]):
     nastepna_lokacja: dict[str, str]
     petla_tury: bool = True
     wybor: str
     while petla_tury:
         os.system("cls" if os.name == "nt" else "clear")
         info_print("Za chwilę wyświetlisz opis paragrafu, w którym się znajdujesz")
-        print(f"{obecna_lokacja['opis']}")
+        print(f"{obecny_paragraf['opis']}")
         info_print("Za chwilę wyświetlisz dostępne kierunki, do których się możesz poruszyć")
-        print(f"Możliwe kierunki ruchu z {obecna_lokacja['nazwa']}:")
-        for indeks, lokacja in enumerate(obecna_lokacja["destynacje"]):
+        print(f"Możliwe kierunki ruchu z {obecny_paragraf['nazwa']}:")
+        for indeks, lokacja in enumerate(obecny_paragraf["destynacje"]):
             print(lokacja)
         wybor = input("Wpisz numer wybranego paragrafu: ")
-        if wybor in obecna_lokacja["destynacje"]:
-            nastepna_lokacja = lista_lokacji[int(wybor)]
+        if wybor in obecny_paragraf["destynacje"]:
+            nastepny_paragraf = lista_paragrafow[int(wybor)]
             petla_tury = False
         elif wybor == "0":
-            return False, lista_lokacji[0]
+            return False, lista_paragrafow[0]
         else:
             info_print("Dokonano nieprawidłowego wyboru. Wybierz ponownie !!!")
-    return status_gry, nastepna_lokacja
+    return status_gry, nastepny_paragraf
 
 def program() -> None:
     debug_print("Rozpoczynam grać w grę. Uruchamiam pętle gry")
     paragraf: dict[str, str]
     status: bool = True
     program_pracuje: bool = True
-    paragraf = lista_lokacji[1]
+    paragraf = lista_paragrafow[1]
     while program_pracuje:
         os.system("cls" if os.name == "nt" else "clear")
         debug_print("Rozpoczęcie tury gry")
         debug_print(f"Pełny słownik lokacji, w której jesteś: {paragraf}")
-        status, paragraf = tura_gry(status_gry=status, obecna_lokacja=paragraf)
+        status, paragraf = tura_gry(status_gry=status, obecny_paragraf=paragraf)
         debug_print("Koniec tury gry")
         program_pracuje = status
     return None
@@ -81,6 +81,9 @@ if __name__ == "__main__":
         os.system("cls" if os.name == "nt" else "clear")
         print(f"""
         Historia wersji:
+        
+        0.0.1
+        Działający silnik gry w wersji tekstowej z flagami CLI.
         
         0.0.0
         Rozpoczęcie pracy.

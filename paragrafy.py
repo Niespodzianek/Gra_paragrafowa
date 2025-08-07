@@ -41,4 +41,4 @@ paragraf_6: dict[str, str] = {
         "destynacje" : ["3", "4", "5"]
 }
 
-lista_lokacji: list[dict[str, str]] = [paragraf_0, paragraf_1, paragraf_2, paragraf_3, paragraf_4, paragraf_5, paragraf_6]
+lista_paragrafow: list[dict[str, str]] = [paragraf_0, paragraf_1, paragraf_2, paragraf_3, paragraf_4, paragraf_5, paragraf_6]
